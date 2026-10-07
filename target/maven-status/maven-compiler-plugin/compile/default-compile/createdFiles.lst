@@ -1,0 +1,10 @@
+com\mycompany\miniproject\model\DapatDitampilkan.class
+com\mycompany\miniproject\model\DonorBaru.class
+com\mycompany\miniproject\controller\DonasiDarahController.class
+com\mycompany\miniproject\model\DonasiDarahManager.class
+com\mycompany\miniproject\model\Donor.class
+com\mycompany\miniproject\view\ConsoleView.class
+com\mycompany\miniproject\MiniProject.class
+com\mycompany\miniproject\model\DonorTetap.class
+com\mycompany\miniproject\model\DataTidakDitemukanException.class
+com\mycompany\miniproject\model\RiwayatDonasi.class
