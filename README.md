@@ -72,7 +72,7 @@ com.mycompany.miniproject
 | model | RiwayatDonasi | Data satu kali donasi (tanggal dan jumlah kantong darah). |
 | model | DonasiDarahManager | Menyimpan list donor dan donasi, serta logika tambah, cari, update, dan hapus. |
 | model | DapatDitampilkan | Interface yang menjadi kontrak agar objek bisa ditampilkan oleh View. |
-| model | DataTidakDitemukanException` | Exception khusus ketika ID donor/donasi tidak ditemukan. |
+| model | DataTidakDitemukanException | Exception khusus ketika ID donor/donasi tidak ditemukan. |
 | view | ConsoleView | Satu-satunya class yang membaca input dan mencetak output di konsol. |
 | controller | DonasiDarahController | Mengatur alur menu: mengambil input dari View, memanggil Model, menangkap exception, lalu meminta View menampilkan hasil. |
 
