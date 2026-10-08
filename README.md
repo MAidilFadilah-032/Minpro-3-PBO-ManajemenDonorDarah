@@ -26,20 +26,20 @@ Sistem Manajemen Donasi Darah adalah program CRUD (Create, Read, Update, Delete)
 
 Pada Minpro 3 ini, program dari Minpro 2 dikembangkan dengan:
 
-- **Struktur proyek MVC** (Model, View, Controller) yang dipisahkan ke dalam package masing-masing.
-- **Polymorphism** (overriding dan overloading).
-- **Abstraction** (abstract class dan abstract method).
-- **Interface** sebagai nilai tambah.
-- Keyword **`final`** pada atribut, method, dan class yang tidak boleh berubah.
-- **Error handling** menggunakan exception, sehingga program tidak langsung berhenti ketika terjadi kesalahan input.
-- Subclass `DonorBaru` dan `DonorTetap` sekarang masing-masing punya **atribut pembeda**.
-- Inisialisasi `ArrayList` yang sebelumnya redundan sudah dirapikan.
+- Struktur proyek MVC (Model, View, Controller) yang dipisahkan ke dalam package masing-masing.
+- Polymorphism (overriding dan overloading).
+- Abstraction (abstract class dan abstract method).
+- Interface sebagai nilai tambah.
+- Keyword final pada atribut, method, dan class yang tidak boleh berubah.
+- Error handling menggunakan exception, sehingga program tidak langsung berhenti ketika terjadi kesalahan input.
+- Subclass DonorBaru dan DonorTetap sekarang punya atribut pembeda.
+- Inisialisasi ArrayList yang redundan sudah dirapikan.
 
 ---
 
 ## 2. Penjelasan Struktur Package
 
-Seluruh kode berada di bawah package `com.mycompany.miniproject` dan dibagi menjadi tiga bagian sesuai pola MVC.
+Seluruh kode berada di bawah package com.mycompany.miniproject dan dibagi menjadi tiga bagian sesuai pola MVC.
 
 ```
 com.mycompany.miniproject
@@ -65,22 +65,22 @@ com.mycompany.miniproject
 
 | Package | Class | Peran |
 |---|---|---|
-| (root) | `MiniProject` | Entry point. Membuat objek Model, View, dan Controller, lalu menjalankan program. Bukan bagian M, V, maupun C. |
-| `model` | `Donor` | Abstract class berisi data dan validasi yang sama untuk semua donor. |
-| `model` | `DonorBaru` | Subclass donor baru, dengan atribut khusus `sumberInformasi`. |
-| `model` | `DonorTetap` | Subclass donor tetap, dengan atribut khusus `nomorKartu` dan `jumlahDonasi`. |
-| `model` | `RiwayatDonasi` | Data satu kali donasi (tanggal dan jumlah kantong darah). |
-| `model` | `DonasiDarahManager` | Menyimpan list donor dan donasi, serta logika tambah, cari, update, dan hapus. |
-| `model` | `DapatDitampilkan` | Interface yang menjadi kontrak agar objek bisa ditampilkan oleh View. |
-| `model` | `DataTidakDitemukanException` | Exception khusus ketika ID donor/donasi tidak ditemukan. |
-| `view` | `ConsoleView` | Satu-satunya class yang membaca input dan mencetak output di konsol. |
-| `controller` | `DonasiDarahController` | Mengatur alur menu: mengambil input dari View, memanggil Model, menangkap exception, lalu meminta View menampilkan hasil. |
+| (root) | MiniProject | Entry point. Membuat objek Model, View, dan Controller, lalu menjalankan program. Bukan bagian M, V, maupun C. |
+| model | Donor | Abstract class berisi data dan validasi yang sama untuk semua donor. |
+| model | DonorBaru | Subclass donor baru, dengan atribut khusus sumberInformasi. |
+| model | DonorTetap | Subclass donor tetap, dengan atribut khusus nomorKartu dan jumlahDonasi. |
+| model | RiwayatDonasi | Data satu kali donasi (tanggal dan jumlah kantong darah). |
+| model | DonasiDarahManager | Menyimpan list donor dan donasi, serta logika tambah, cari, update, dan hapus. |
+| model | DapatDitampilkan | Interface yang menjadi kontrak agar objek bisa ditampilkan oleh View. |
+| model | DataTidakDitemukanException` | Exception khusus ketika ID donor/donasi tidak ditemukan. |
+| view | ConsoleView | Satu-satunya class yang membaca input dan mencetak output di konsol. |
+| controller | DonasiDarahController | Mengatur alur menu: mengambil input dari View, memanggil Model, menangkap exception, lalu meminta View menampilkan hasil. |
 
 ### Aturan hubungan antar bagian
 
-- **Model** tidak mengenal View maupun Controller, dan tidak memakai `Scanner` atau `System.out`.
-- **View** hanya membaca dan menampilkan, tanpa aturan bisnis.
-- **Controller** adalah satu-satunya yang mengenal Model dan View.
+- Model tidak mengenal View maupun Controller, dan tidak memakai Scanner atau System.out.
+- View hanya membaca dan menampilkan, tanpa aturan bisnis.
+- Controller adalah satu-satunya yang mengenal Model dan View.
 
 ---
 
@@ -96,24 +96,24 @@ Pengguna <- View (tampilkan)  <- Controller <- hasil / exception
 
 ### Langkah-langkah
 
-1. Program dimulai dari `MiniProject.main()`, yang membuat `DonasiDarahManager` (Model), `ConsoleView` (View), dan `DonasiDarahController` (Controller), lalu memanggil `controller.jalankan()`.
-2. Saat Model dibuat, program mengisi **data awal** berupa 2 donor (Siti Aminah sebagai Donor Baru dan Budi Santoso sebagai Donor Tetap) dan 1 riwayat donasi, sehingga menu Lihat Data langsung menampilkan isi.
-3. Controller menampilkan **Menu Utama** di dalam perulangan `while`, dan program terus berjalan sampai pengguna memilih `0` (Keluar).
-4. Dari Menu Utama, pengguna masuk ke salah satu submenu lewat `switch`:
-   - **Kelola Data Donor:** Tambah, Lihat Semua, Update, Hapus, dan Cari Donor (berdasarkan nama).
-   - **Kelola Data Donasi:** Catat, Lihat Semua, Update, dan Hapus Donasi.
-   - **Lihat Ringkasan:** total donor, total donasi, dan total kantong darah.
-5. Pada **Tambah Donor**, pengguna memilih kategori (Donor Baru atau Donor Tetap). Input tambahan menyesuaikan kategori: Donor Baru ditanya sumber informasi, Donor Tetap ditanya jumlah donasi sebelumnya.
-6. Pada **Catat Donasi**, donasi dikaitkan ke ID donor yang sudah ada. Untuk Donor Tetap, jumlah donasinya otomatis bertambah satu (lewat method `catatDonasi()` yang di-override).
-7. Pada **Hapus Donor** dan **Hapus Donasi**, program meminta konfirmasi `y/n`. Menghapus donor juga menghapus riwayat donasi miliknya.
-8. Data disimpan sementara di `ArrayList`, sehingga hilang saat program ditutup.
+1. Program dimulai dari MiniProject.main(), yang membuat DonasiDarahManager (Model), ConsoleView (View), dan DonasiDarahController (Controller), lalu memanggil controller.jalankan().
+2. Saat Model dibuat, program mengisi data awal berupa 2 donor (Siti Aminah sebagai Donor Baru dan Budi Santoso sebagai Donor Tetap) dan 1 riwayat donasi, sehingga menu Lihat Data langsung menampilkan isi.
+3. Controller menampilkan Menu Utama di dalam perulangan while, dan program terus berjalan sampai pengguna memilih 0 (Keluar).
+4. Dari Menu Utama, pengguna masuk ke salah satu submenu lewat switch:
+   - Kelola Data Donor: Tambah, Lihat Semua, Update, Hapus, dan Cari Donor (berdasarkan nama).
+   - Kelola Data Donasi: Catat, Lihat Semua, Update, dan Hapus Donasi.
+   - Lihat Ringkasan: total donor, total donasi, dan total kantong darah.
+5. Pada Tambah Donor, pengguna memilih kategori (Donor Baru atau Donor Tetap). Input tambahan menyesuaikan kategori: Donor Baru ditanya sumber informasi, Donor Tetap ditanya jumlah donasi sebelumnya.
+6. Pada Catat Donasi, donasi dikaitkan ke ID donor yang sudah ada. Untuk Donor Tetap, jumlah donasinya otomatis bertambah satu (lewat method catatDonasi() yang di-override).
+7. Pada Hapus Donor dan Hapus Donasi, program meminta konfirmasi y/n. Menghapus donor juga menghapus riwayat donasi miliknya.
+8. Data disimpan sementara di ArrayList, sehingga hilang saat program ditutup.
 
 ### Error handling
 
-- Input angka dibaca oleh `ConsoleView.bacaAngka()`, yang mengulang pertanyaan sampai pengguna memasukkan angka yang valid, jadi huruf atau input kosong tidak membuat program crash.
-- Validasi data (nama kosong, golongan darah selain A/B/AB/O, umur di luar 17-65, no. telepon tidak valid, tanggal salah format atau di masa depan, jumlah kantong kurang dari 1) dilakukan di Model dengan melempar `IllegalArgumentException`.
-- ID yang tidak ada akan melempar `DataTidakDitemukanException`.
-- Controller menangkap kedua exception tersebut dan meminta View menampilkan pesan `[GAGAL] ...`, lalu pengguna kembali ke menu.
+- Input angka dibaca oleh ConsoleView.bacaAngka(), yang mengulang pertanyaan sampai pengguna memasukkan angka yang valid, jadi huruf atau input kosong tidak membuat program crash.
+- Validasi data (nama kosong, golongan darah selain A/B/AB/O, umur di luar 17-65, no. telepon tidak valid, tanggal salah format atau di masa depan, jumlah kantong kurang dari 1) dilakukan di Model dengan melempar IllegalArgumentException.
+- ID yang tidak ada akan melempar DataTidakDitemukanException.
+- Controller menangkap kedua exception tersebut dan meminta View menampilkan pesan [GAGAL] ..., lalu pengguna kembali ke menu.
 - Update data bersifat **atomik**: semua input divalidasi dulu, sehingga bila ada satu yang salah tidak ada data yang berubah sebagian.
 
 ---
@@ -122,37 +122,37 @@ Pengguna <- View (tampilkan)  <- Controller <- hasil / exception
 
 ### Encapsulation
 
-- Semua atribut pada `Donor`, `DonorBaru`, `DonorTetap`, dan `RiwayatDonasi` bersifat **`private`**, sehingga tidak bisa diubah langsung dari luar class.
-- Setiap atribut memiliki **getter** `public` untuk membaca nilai, dan **setter** `public` untuk mengubah nilai.
-- Setiap setter **memvalidasi** nilai sebelum disimpan. Jika tidak valid, setter melempar `IllegalArgumentException` dan nilai lama tetap dipertahankan.
-- Constructor memanggil setter (bukan `this.atribut = nilai`), sehingga validasi tetap berlaku saat objek pertama kali dibuat.
-- Update data lewat `perbaruiData(...)` pada objek yang sudah tersimpan di list, sehingga encapsulation dipakai dalam alur program.
-- Konstanta aturan bisnis disimpan sebagai `public static final`: `UMUR_MINIMAL`, `UMUR_MAKSIMAL`, dan `GOLONGAN_VALID`.
+- Semua atribut pada Donor, DonorBaru, DonorTetap, dan RiwayatDonasi bersifat private, sehingga tidak bisa diubah langsung dari luar class.
+- Setiap atribut memiliki getter public untuk membaca nilai, dan setter public untuk mengubah nilai.
+- Setiap setter memvalidasi nilai sebelum disimpan. Jika tidak valid, setter melempar IllegalArgumentException dan nilai lama tetap dipertahankan.
+- Constructor memanggil setter (bukan this.atribut = nilai), sehingga validasi tetap berlaku saat objek pertama kali dibuat.
+- Update data lewat perbaruiData(...)` pada objek yang sudah tersimpan di list, sehingga encapsulation dipakai dalam alur program.
+- Konstanta aturan bisnis disimpan sebagai public static final: UMUR_MINIMAL, UMUR_MAKSIMAL, dan GOLONGAN_VALID.
 
 #### Penerapan keyword `final`
 
 | Letak | Alasan |
 |---|---|
-| Atribut `id` di `Donor` | ID tidak boleh berubah setelah objek dibuat. |
-| Atribut `idDonasi` dan `idDonor` di `RiwayatDonasi` | Identitas donasi dan pemiliknya tidak boleh berubah. |
-| Atribut `nomorKartu` di `DonorTetap` | Nomor kartu dibuat otomatis dari ID dan tidak boleh diganti. |
-| Konstanta `UMUR_MINIMAL`, `UMUR_MAKSIMAL`, `GOLONGAN_VALID` | Aturan bisnis yang bersifat tetap. |
-| Setter di `Donor` (`setNama`, `setUmur`, dan lainnya) | Dipanggil di constructor, jadi tidak boleh di-override oleh subclass. |
-| Class `DonorBaru`, `DonorTetap`, `RiwayatDonasi` | Tidak dirancang untuk diwariskan lagi. |
-| Atribut list di `DonasiDarahManager`, serta `manager` dan `view` di Controller | Referensi objek tidak boleh diganti setelah diinisialisasi. |
+| Atribut id di Donor | ID tidak boleh berubah setelah objek dibuat. |
+| Atribut idDonasi dan idDonor di RiwayatDonasi | Identitas donasi dan pemiliknya tidak boleh berubah. |
+| Atribut nomorKartu di DonorTetap | Nomor kartu dibuat otomatis dari ID dan tidak boleh diganti. |
+| Konstanta UMUR_MINIMAL, UMUR_MAKSIMAL, GOLONGAN_VALID | Aturan bisnis yang bersifat tetap. |
+| Setter di Donor (setNama, setUmur, dan lainnya) | Dipanggil di constructor, jadi tidak boleh di-override oleh subclass. |
+| Class DonorBaru, DonorTetap, RiwayatDonasi | Tidak dirancang untuk diwariskan lagi. |
+| Atribut list di DonasiDarahManager, serta manager dan view di Controller | Referensi objek tidak boleh diganti setelah diinisialisasi. |
 
 ### Inheritance
 
-- `Donor` adalah **superclass abstract** yang menyimpan atribut dan method yang dimiliki semua donor: `id`, `nama`, `golonganDarah`, `umur`, `noTelepon`, beserta getter, setter, dan `formatData()`.
-- Dua subclass mewarisi `Donor`, masing-masing dengan **atribut pembeda**:
+- Donor adalah superclass abstract yang menyimpan atribut dan method yang dimiliki semua donor: id, nama, golonganDarah, umur, noTelepon, beserta getter, setter, dan formatData().
+- Dua subclass mewarisi Donor, masing-masing dengan atribut pembeda:
 
 | Subclass | Atribut khusus | Keterangan |
 |---|---|---|
-| `DonorBaru` | `sumberInformasi` | Dari mana donor tahu program donor darah. |
-| `DonorTetap` | `nomorKartu`, `jumlahDonasi` | Nomor kartu otomatis (misalnya `KD-0002`) dan jumlah donasi yang sudah dilakukan. |
+| DonorBaru | sumberInformasi | Dari mana donor tahu program donor darah. |
+| DonorTetap | nomorKartu, jumlahDonasi | Nomor kartu otomatis (misalnya KD-0002) dan jumlah donasi yang sudah dilakukan. |
 
 - Kedua subclass memanggil constructor superclass lewat `super(...)` untuk mengisi atribut bersama, lalu mengisi atribut khususnya sendiri.
-- `List<Donor>` di `DonasiDarahManager` dapat menyimpan objek `DonorBaru` maupun `DonorTetap` sekaligus, karena keduanya adalah `Donor`.
+- List<Donor> di DonasiDarahManager dapat menyimpan objek DonorBaru maupun DonorTetap sekaligus, karena keduanya adalah Donor.
 
 ---
 
@@ -160,14 +160,14 @@ Pengguna <- View (tampilkan)  <- Controller <- hasil / exception
 
 ### Abstraction
 
-`Donor` adalah **abstract class** dengan dua **abstract method** yang sengaja tidak diberi isi, karena setiap subclass wajib mengisinya sendiri:
+Donor adalah abstract class dengan dua abstract method yang sengaja tidak diberi isi, karena setiap subclass wajib mengisinya sendiri:
 
 ```java
 public abstract String getKategori();
 public abstract String getInfoKhusus();
 ```
 
-Dengan begitu `Donor` tidak bisa dibuat objeknya secara langsung. Objek yang dibuat hanya `DonorBaru` atau `DonorTetap`.
+Dengan begitu Donor tidak bisa dibuat objeknya secara langsung. Objek yang dibuat hanya DonorBaru atau DonorTetap.
 
 ### Polymorphism: Overriding
 
