@@ -10,4 +10,12 @@
         <maven.compiler.release>26</maven.compiler.release>
         <exec.mainClass>com.mycompany.miniproject.MiniProject</exec.mainClass>
     </properties>
+    <name>MiniProject4</name>
+       <dependencies>
+       <dependency>
+           <groupId>com.mysql</groupId>
+           <artifactId>mysql-connector-j</artifactId>
+           <version>8.0.33</version>
+       </dependency>
+   </dependencies>
 </project>

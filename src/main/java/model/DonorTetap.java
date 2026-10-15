@@ -1,4 +1,4 @@
-package com.mycompany.miniproject.model;
+package model;
 
 public final class DonorTetap extends Donor {
 

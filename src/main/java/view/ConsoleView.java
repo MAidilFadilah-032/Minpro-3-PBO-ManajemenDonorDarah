@@ -1,6 +1,6 @@
-package com.mycompany.miniproject.view;
+package view;
 
-import com.mycompany.miniproject.model.DapatDitampilkan;
+import model.DapatDitampilkan;
 import java.util.List;
 import java.util.Scanner;
 

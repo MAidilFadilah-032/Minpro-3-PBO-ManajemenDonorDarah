@@ -1,4 +1,4 @@
-package com.mycompany.miniproject.model;
+package model;
 
 import java.util.List;
 
@@ -8,6 +8,8 @@ public abstract class Donor implements DapatDitampilkan {
     public static final int UMUR_MAKSIMAL = 65;
     public static final List<String> GOLONGAN_VALID = List.of("A", "B", "AB", "O");
 
+    public static final int ID_BELUM_ADA = 0;
+
     private final int id;
     private String nama;
     private String golonganDarah;
@@ -15,8 +17,8 @@ public abstract class Donor implements DapatDitampilkan {
     private String noTelepon;
 
     protected Donor(final int id, String nama, String golonganDarah, int umur, String noTelepon) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("ID donor harus lebih dari 0.");
+        if (id < 0) {
+            throw new IllegalArgumentException("ID donor tidak boleh negatif.");
         }
         this.id = id;
         setNama(nama);
@@ -78,8 +80,9 @@ public abstract class Donor implements DapatDitampilkan {
     }
 
     public void catatDonasi() {
-        // sengaja kosong
+        
     }
+
 
     private static String validasiNama(String nama) {
         if (nama == null || nama.trim().isEmpty()) {

@@ -1,9 +1,10 @@
-package com.mycompany.miniproject.controller;
+package controller;
 
-import com.mycompany.miniproject.model.DataTidakDitemukanException;
-import com.mycompany.miniproject.model.DonasiDarahManager;
-import com.mycompany.miniproject.model.Donor;
-import com.mycompany.miniproject.view.ConsoleView;
+import model.DataTidakDitemukanException;
+import model.DatabaseException;
+import model.Donor;
+import service.DonasiDarahManager;
+import view.ConsoleView;
 import java.util.List;
 
 public class DonasiDarahController {
@@ -36,6 +37,7 @@ public class DonasiDarahController {
         }
     }
 
+
     private void menuDonor() {
         boolean kembali = false;
 
@@ -53,7 +55,7 @@ public class DonasiDarahController {
                     case 0 -> kembali = true;
                     default -> view.tampilkanError("Pilihan tidak tersedia.");
                 }
-            } catch (IllegalArgumentException | DataTidakDitemukanException e) {
+            } catch (IllegalArgumentException | DataTidakDitemukanException | DatabaseException e) {
                 view.tampilkanError(e.getMessage());
             }
         }
@@ -85,7 +87,7 @@ public class DonasiDarahController {
     private void updateDonor() throws DataTidakDitemukanException {
         view.tampilkanData(manager.getDaftarDonor(), "Belum ada data donor.");
         int id = view.bacaAngka("Masukkan ID Donor yang ingin diupdate: ");
-        manager.cariDonor(id); // cek dulu supaya tidak perlu mengetik data jika ID salah
+        manager.cariDonor(id); 
 
         String nama = view.bacaTeks("Nama baru: ");
         String golongan = view.bacaTeks("Golongan darah baru: ");
@@ -117,6 +119,7 @@ public class DonasiDarahController {
         view.tampilkanData(hasil, "Tidak ada donor yang cocok.");
     }
 
+
     private void menuDonasi() {
         boolean kembali = false;
 
@@ -133,7 +136,7 @@ public class DonasiDarahController {
                     case 0 -> kembali = true;
                     default -> view.tampilkanError("Pilihan tidak tersedia.");
                 }
-            } catch (IllegalArgumentException | DataTidakDitemukanException e) {
+            } catch (IllegalArgumentException | DataTidakDitemukanException | DatabaseException e) {
                 view.tampilkanError(e.getMessage());
             }
         }
@@ -176,11 +179,12 @@ public class DonasiDarahController {
         }
     }
 
+
     private void tampilkanRingkasan() {
         view.tampilkanPesan("");
         view.tampilkanPesan("--- RINGKASAN ---");
-        view.tampilkanPesan("Total Donor terdaftar: " + manager.getJumlahDonor());
-        view.tampilkanPesan("Total Donasi tercatat: " + manager.getJumlahDonasi());
-        view.tampilkanPesan("Total kantong darah: " + manager.getTotalKantong());
+        view.tampilkanPesan("Total Donor terdaftar : " + manager.getJumlahDonor());
+        view.tampilkanPesan("Total Donasi tercatat : " + manager.getJumlahDonasi());
+        view.tampilkanPesan("Total kantong darah   : " + manager.getTotalKantong());
     }
 }

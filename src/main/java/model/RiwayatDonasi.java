@@ -1,17 +1,20 @@
-package com.mycompany.miniproject.model;
+package model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public final class RiwayatDonasi implements DapatDitampilkan {
+
+    public static final int ID_BELUM_ADA = 0;
+
     private final int idDonasi;
     private final int idDonor;
     private LocalDate tanggalDonasi;
     private int jumlahKantong;
 
     public RiwayatDonasi(final int idDonasi, final int idDonor, LocalDate tanggalDonasi, int jumlahKantong) {
-        if (idDonasi <= 0) {
-            throw new IllegalArgumentException("ID donasi harus lebih dari 0.");
+        if (idDonasi < 0) {
+            throw new IllegalArgumentException("ID donasi tidak boleh negatif.");
         }
         if (idDonor <= 0) {
             throw new IllegalArgumentException("ID donor harus lebih dari 0.");
